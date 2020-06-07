@@ -15,11 +15,11 @@ categories.columns = category_colnames
 for column in categories:
     categories[column] = categories[column].astype(str).apply(lambda col: col[-1])
     categories[column] = pd.to_numeric(categories[column])
-
+categories.replace(2, 1, inplace=True)
 df.drop(columns='categories', inplace=True)
 
 df = pd.concat([df, categories], axis=1)
 df.drop_duplicates(inplace=True)
 
 engine = create_engine('sqlite:///CleanMessages.db')
-df.to_sql('cleanMessages', engine, index=False)
+df.to_sql('CleanMessages', engine, index=False)
