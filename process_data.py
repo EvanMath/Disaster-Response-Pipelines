@@ -4,6 +4,18 @@ import sys
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    This function merges two dataframes and creates a
+    dataframe contains messages and categories.
+
+    INPUT:
+    messages_filepath: file path for the 'messages' file
+    categories_filepath: file path for the 'categories' file
+
+    OUTPUT:
+    Pandas Dataframe
+    """
+
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
 
@@ -12,6 +24,15 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    Helper function to clean the 'df'
+
+    INPUT:
+    df: pandas dataframe
+
+    OUTPUT:
+    Cleaned version of 'df'
+    """
     categories = df['categories'].str.split(';', expand=True)
 
     row = categories.iloc[0]
@@ -30,6 +51,13 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """
+    Function to save the cleaned 'df' as a database.
+
+    INPUT:
+    df: Pandas Dataframe to be saved
+    database_filename: Name of database
+    """
     engine = create_engine(f'sqlite:///{database_filename}')
     df.to_sql('CleanMessages', engine, index=False)
 
